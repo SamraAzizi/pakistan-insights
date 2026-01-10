@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import {
   LineChart,
   Line,
@@ -9,20 +10,46 @@ import {
   Legend,
 } from "recharts";
 import { enrollmentTrends } from "@/data/pakistanData";
+import { useTimeFilter } from "@/contexts/TimeFilterContext";
+import { ChartExportMenu } from "@/components/ChartExportMenu";
 
 export const EnrollmentTrendChart = () => {
+  const chartRef = useRef<HTMLDivElement>(null);
+  const { yearRange } = useTimeFilter();
+
+  // Filter data based on year range
+  const filteredData = enrollmentTrends.filter(
+    (item) => item.year >= yearRange[0] && item.year <= yearRange[1]
+  );
+
+  const isFiltered = yearRange[0] !== 1970 || yearRange[1] !== 2024;
+
   return (
-    <div className="w-full h-[350px] p-6 bg-card rounded-xl border border-border shadow-card">
-      <div className="mb-6">
-        <h3 className="font-display text-xl font-bold text-foreground">
-          School Enrollment Trends
-        </h3>
-        <p className="text-sm text-muted-foreground">
-          Students enrolled by education level (millions)
-        </p>
+    <div ref={chartRef} className="w-full h-[350px] p-6 bg-card rounded-xl border border-border shadow-card">
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h3 className="font-display text-xl font-bold text-foreground">
+            School Enrollment Trends
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Students enrolled by education level (millions)
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          {isFiltered && (
+            <span className="px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium">
+              {yearRange[0]} - {yearRange[1]}
+            </span>
+          )}
+          <ChartExportMenu
+            chartRef={chartRef}
+            data={filteredData}
+            filename="enrollment-trends"
+          />
+        </div>
       </div>
       <ResponsiveContainer width="100%" height="80%">
-        <LineChart data={enrollmentTrends}>
+        <LineChart data={filteredData}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(40, 20%, 88%)" />
           <XAxis
             dataKey="year"
