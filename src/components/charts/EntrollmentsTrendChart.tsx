@@ -11,11 +11,13 @@ import {
 } from "recharts";
 import { enrollmentTrends } from "@/data/pakistanData";
 import { useTimeFilter } from "@/contexts/TimeFilterContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { ChartExportMenu } from "@/components/ChartExportMenu";
 
 export const EnrollmentTrendChart = () => {
   const chartRef = useRef<HTMLDivElement>(null);
   const { yearRange } = useTimeFilter();
+  const { t, isUrdu } = useLanguage();
 
   // Filter data based on year range
   const filteredData = enrollmentTrends.filter(
@@ -26,16 +28,16 @@ export const EnrollmentTrendChart = () => {
 
   return (
     <div ref={chartRef} className="w-full h-[350px] p-6 bg-card rounded-xl border border-border shadow-card">
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h3 className="font-display text-xl font-bold text-foreground">
-            School Enrollment Trends
+      <div className={`mb-6 flex items-center justify-between ${isUrdu ? 'flex-row-reverse' : ''}`}>
+        <div className={isUrdu ? 'text-right' : ''}>
+          <h3 className={`font-display text-xl font-bold text-foreground ${isUrdu ? 'font-urdu' : ''}`}>
+            {t("education.enrollmentTrends")}
           </h3>
-          <p className="text-sm text-muted-foreground">
-            Students enrolled by education level (millions)
+          <p className={`text-sm text-muted-foreground ${isUrdu ? 'font-urdu' : ''}`}>
+            {t("education.enrollmentTrendsDesc")}
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className={`flex items-center gap-2 ${isUrdu ? 'flex-row-reverse' : ''}`}>
           {isFiltered && (
             <span className="px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium">
               {yearRange[0]} - {yearRange[1]}
@@ -76,7 +78,7 @@ export const EnrollmentTrendChart = () => {
           <Line
             type="monotone"
             dataKey="primary"
-            name="Primary"
+            name={t("education.primary")}
             stroke="hsl(150, 98%, 13%)"
             strokeWidth={3}
             dot={{ fill: "hsl(150, 98%, 13%)", strokeWidth: 2 }}
@@ -85,7 +87,7 @@ export const EnrollmentTrendChart = () => {
           <Line
             type="monotone"
             dataKey="secondary"
-            name="Secondary"
+            name={t("education.secondary")}
             stroke="hsl(220, 70%, 50%)"
             strokeWidth={3}
             dot={{ fill: "hsl(220, 70%, 50%)", strokeWidth: 2 }}
@@ -94,7 +96,7 @@ export const EnrollmentTrendChart = () => {
           <Line
             type="monotone"
             dataKey="higher"
-            name="Higher Education"
+            name={t("education.higherEducation")}
             stroke="hsl(38, 92%, 50%)"
             strokeWidth={3}
             dot={{ fill: "hsl(38, 92%, 50%)", strokeWidth: 2 }}
