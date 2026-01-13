@@ -12,11 +12,13 @@ import {
 } from "recharts";
 import { provincialLiteracy } from "@/data/pakistanData";
 import { useProvinceFilter } from "@/contexts/ProvinceFilterContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { ChartExportMenu } from "@/components/ChartExportMenu";
 
 export const ProvincialLiteracyChart = () => {
   const chartRef = useRef<HTMLDivElement>(null);
   const { selectedProvince } = useProvinceFilter();
+  const { t, isUrdu } = useLanguage();
 
   // Filter data based on selected province
   const filteredData = selectedProvince
@@ -30,19 +32,19 @@ export const ProvincialLiteracyChart = () => {
 
   return (
     <div ref={chartRef} className="w-full h-[400px] p-6 bg-card rounded-xl border border-border shadow-card">
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h3 className="font-display text-xl font-bold text-foreground">
-            Provincial Literacy Comparison
+      <div className={`mb-6 flex items-center justify-between ${isUrdu ? 'flex-row-reverse' : ''}`}>
+        <div className={isUrdu ? 'text-right' : ''}>
+          <h3 className={`font-display text-xl font-bold text-foreground ${isUrdu ? 'font-urdu' : ''}`}>
+            {t("education.provincialComparison")}
           </h3>
-          <p className="text-sm text-muted-foreground">
-            Gender gap in education across provinces (2023)
+          <p className={`text-sm text-muted-foreground ${isUrdu ? 'font-urdu' : ''}`}>
+            {t("education.provincialComparisonDesc")}
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className={`flex items-center gap-2 ${isUrdu ? 'flex-row-reverse' : ''}`}>
           {selectedProvince && (
-            <span className="px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium">
-              Filtered: {selectedProvince}
+            <span className={`px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium ${isUrdu ? 'font-urdu' : ''}`}>
+              {t("education.filtered")}: {selectedProvince}
             </span>
           )}
           <ChartExportMenu
@@ -81,8 +83,8 @@ export const ProvincialLiteracyChart = () => {
             formatter={(value: number) => [`${value.toFixed(1)}%`, ""]}
           />
           <Legend />
-          <Bar dataKey="male" name="Male" fill="hsl(220, 70%, 50%)" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="female" name="Female" fill="hsl(38, 92%, 50%)" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="male" name={t("education.male")} fill="hsl(220, 70%, 50%)" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="female" name={t("education.female")} fill="hsl(38, 92%, 50%)" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>
