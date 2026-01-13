@@ -32,3 +32,29 @@ export const ChartExportMenu = ({ chartRef, data, filename }: ChartExportMenuPro
     exportToCSV(data, filename);
     toast({ title: "Exported", description: `${filename}.csv downloaded` });
   };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="sm" className="h-8 px-2">
+          <Download className="w-4 h-4 mr-1" />
+          Export
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={handleExportPNG}>
+          <Image className="w-4 h-4 mr-2" />
+          Download PNG
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={handleExportSVG}>
+          <Image className="w-4 h-4 mr-2" />
+          Download SVG
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={handleExportCSV}>
+          <FileSpreadsheet className="w-4 h-4 mr-2" />
+          Download CSV
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
