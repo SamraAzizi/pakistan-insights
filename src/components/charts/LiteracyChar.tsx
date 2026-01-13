@@ -11,11 +11,13 @@ import {
 } from "recharts";
 import { literacyData } from "@/data/pakistanData";
 import { useTimeFilter } from "@/contexts/TimeFilterContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { ChartExportMenu } from "@/components/ChartExportMenu";
 
 export const LiteracyChart = () => {
   const chartRef = useRef<HTMLDivElement>(null);
   const { yearRange } = useTimeFilter();
+  const { t, isUrdu } = useLanguage();
 
   // Filter data based on year range
   const filteredData = literacyData.filter(
@@ -26,16 +28,16 @@ export const LiteracyChart = () => {
 
   return (
     <div ref={chartRef} className="w-full h-[400px] p-6 bg-card rounded-xl border border-border shadow-card">
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h3 className="font-display text-xl font-bold text-foreground">
-            Literacy Rate Evolution
+      <div className={`mb-6 flex items-center justify-between ${isUrdu ? 'flex-row-reverse' : ''}`}>
+        <div className={isUrdu ? 'text-right' : ''}>
+          <h3 className={`font-display text-xl font-bold text-foreground ${isUrdu ? 'font-urdu' : ''}`}>
+            {t("education.literacyEvolution")}
           </h3>
-          <p className="text-sm text-muted-foreground">
-            Pakistan's literacy journey from 1981 to 2023
+          <p className={`text-sm text-muted-foreground ${isUrdu ? 'font-urdu' : ''}`}>
+            {t("education.literacyEvolutionDesc")}
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className={`flex items-center gap-2 ${isUrdu ? 'flex-row-reverse' : ''}`}>
           {isFiltered && (
             <span className="px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium">
               {yearRange[0]} - {yearRange[1]}
@@ -91,7 +93,7 @@ export const LiteracyChart = () => {
           <Area
             type="monotone"
             dataKey="male"
-            name="Male"
+            name={t("education.male")}
             stroke="hsl(220, 70%, 50%)"
             strokeWidth={2}
             fill="url(#colorMale)"
@@ -99,7 +101,7 @@ export const LiteracyChart = () => {
           <Area
             type="monotone"
             dataKey="female"
-            name="Female"
+            name={t("education.female")}
             stroke="hsl(38, 92%, 50%)"
             strokeWidth={2}
             fill="url(#colorFemale)"
@@ -107,7 +109,7 @@ export const LiteracyChart = () => {
           <Area
             type="monotone"
             dataKey="overall"
-            name="Overall"
+            name={t("education.overall")}
             stroke="hsl(150, 98%, 13%)"
             strokeWidth={3}
             fill="url(#colorOverall)"
