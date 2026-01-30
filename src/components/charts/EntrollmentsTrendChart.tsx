@@ -12,7 +12,8 @@ import {
 import { enrollmentTrends } from "@/data/pakistanData";
 import { useTimeFilter } from "@/contexts/TimeFilterContext";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { ChartExportMenu } from "@/components/ChartExportMenu";
+import { BilingualExportMenu } from "@/components/BilingualExportMenu";
+import { AnimatedChartWrapper, useChartAnimationKey } from "./AnimatedChartWrapper";
 
 export const EnrollmentTrendChart = () => {
   const chartRef = useRef<HTMLDivElement>(null);
@@ -25,6 +26,7 @@ export const EnrollmentTrendChart = () => {
   );
 
   const isFiltered = yearRange[0] !== 1970 || yearRange[1] !== 2024;
+  const chartKey = useChartAnimationKey(yearRange);
 
   return (
     <div ref={chartRef} className="w-full h-[350px] p-6 bg-card rounded-xl border border-border shadow-card">
@@ -43,67 +45,70 @@ export const EnrollmentTrendChart = () => {
               {yearRange[0]} - {yearRange[1]}
             </span>
           )}
-          <ChartExportMenu
+          <BilingualExportMenu
             chartRef={chartRef}
             data={filteredData}
             filename="enrollment-trends"
+            reportTitle={{ en: "School Enrollment Trends", ur: "اسکول میں اندراج کے رجحانات" }}
           />
         </div>
       </div>
-      <ResponsiveContainer width="100%" height="80%">
-        <LineChart data={filteredData}>
-          <CartesianGrid strokeDasharray="3 3" stroke="hsl(40, 20%, 88%)" />
-          <XAxis
-            dataKey="year"
-            stroke="hsl(40, 10%, 40%)"
-            fontSize={12}
-            tickLine={false}
-          />
-          <YAxis
-            stroke="hsl(40, 10%, 40%)"
-            fontSize={12}
-            tickLine={false}
-            tickFormatter={(value) => `${value}M`}
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: "hsl(0, 0%, 100%)",
-              border: "1px solid hsl(40, 20%, 88%)",
-              borderRadius: "8px",
-              boxShadow: "0 4px 20px -4px rgba(0,0,0,0.1)",
-            }}
-            formatter={(value: number) => [`${value.toFixed(1)}M`, ""]}
-          />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="primary"
-            name={t("education.primary")}
-            stroke="hsl(150, 98%, 13%)"
-            strokeWidth={3}
-            dot={{ fill: "hsl(150, 98%, 13%)", strokeWidth: 2 }}
-            activeDot={{ r: 6 }}
-          />
-          <Line
-            type="monotone"
-            dataKey="secondary"
-            name={t("education.secondary")}
-            stroke="hsl(220, 70%, 50%)"
-            strokeWidth={3}
-            dot={{ fill: "hsl(220, 70%, 50%)", strokeWidth: 2 }}
-            activeDot={{ r: 6 }}
-          />
-          <Line
-            type="monotone"
-            dataKey="higher"
-            name={t("education.higherEducation")}
-            stroke="hsl(38, 92%, 50%)"
-            strokeWidth={3}
-            dot={{ fill: "hsl(38, 92%, 50%)", strokeWidth: 2 }}
-            activeDot={{ r: 6 }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      <AnimatedChartWrapper dataKey={chartKey} className="w-full h-[80%]">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={filteredData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(40, 20%, 88%)" />
+            <XAxis
+              dataKey="year"
+              stroke="hsl(40, 10%, 40%)"
+              fontSize={12}
+              tickLine={false}
+            />
+            <YAxis
+              stroke="hsl(40, 10%, 40%)"
+              fontSize={12}
+              tickLine={false}
+              tickFormatter={(value) => `${value}M`}
+            />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "hsl(0, 0%, 100%)",
+                border: "1px solid hsl(40, 20%, 88%)",
+                borderRadius: "8px",
+                boxShadow: "0 4px 20px -4px rgba(0,0,0,0.1)",
+              }}
+              formatter={(value: number) => [`${value.toFixed(1)}M`, ""]}
+            />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="primary"
+              name={t("education.primary")}
+              stroke="hsl(150, 98%, 13%)"
+              strokeWidth={3}
+              dot={{ fill: "hsl(150, 98%, 13%)", strokeWidth: 2 }}
+              activeDot={{ r: 6 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="secondary"
+              name={t("education.secondary")}
+              stroke="hsl(220, 70%, 50%)"
+              strokeWidth={3}
+              dot={{ fill: "hsl(220, 70%, 50%)", strokeWidth: 2 }}
+              activeDot={{ r: 6 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="higher"
+              name={t("education.higherEducation")}
+              stroke="hsl(38, 92%, 50%)"
+              strokeWidth={3}
+              dot={{ fill: "hsl(38, 92%, 50%)", strokeWidth: 2 }}
+              activeDot={{ r: 6 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </AnimatedChartWrapper>
     </div>
   );
 };
