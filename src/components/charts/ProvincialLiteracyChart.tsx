@@ -13,7 +13,8 @@ import {
 import { provincialLiteracy } from "@/data/pakistanData";
 import { useProvinceFilter } from "@/contexts/ProvinceFilterContext";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { ChartExportMenu } from "@/components/ChartExportMenu";
+import { BilingualExportMenu } from "@/components/BilingualExportMenu";
+import { AnimatedChartWrapper, useChartAnimationKey } from "./AnimatedChartWrapper";
 
 export const ProvincialLiteracyChart = () => {
   const chartRef = useRef<HTMLDivElement>(null);
@@ -29,6 +30,8 @@ export const ProvincialLiteracyChart = () => {
     if (!selectedProvince) return false;
     return province !== selectedProvince;
   };
+  
+  const chartKey = useChartAnimationKey(selectedProvince);
 
   return (
     <div ref={chartRef} className="w-full h-[400px] p-6 bg-card rounded-xl border border-border shadow-card">
@@ -47,46 +50,49 @@ export const ProvincialLiteracyChart = () => {
               {t("education.filtered")}: {selectedProvince}
             </span>
           )}
-          <ChartExportMenu
+          <BilingualExportMenu
             chartRef={chartRef}
             data={filteredData}
             filename="provincial-literacy"
+            reportTitle={{ en: "Provincial Literacy Comparison", ur: "صوبائی خواندگی کا موازنہ" }}
           />
         </div>
       </div>
-      <ResponsiveContainer width="100%" height="80%">
-        <BarChart data={filteredData} barGap={2}>
-          <CartesianGrid strokeDasharray="3 3" stroke="hsl(40, 20%, 88%)" />
-          <XAxis
-            dataKey="province"
-            stroke="hsl(40, 10%, 40%)"
-            fontSize={11}
-            tickLine={false}
-            angle={-15}
-            textAnchor="end"
-            height={60}
-          />
-          <YAxis
-            stroke="hsl(40, 10%, 40%)"
-            fontSize={12}
-            tickLine={false}
-            domain={[0, 100]}
-            tickFormatter={(value) => `${value}%`}
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: "hsl(0, 0%, 100%)",
-              border: "1px solid hsl(40, 20%, 88%)",
-              borderRadius: "8px",
-              boxShadow: "0 4px 20px -4px rgba(0,0,0,0.1)",
-            }}
-            formatter={(value: number) => [`${value.toFixed(1)}%`, ""]}
-          />
-          <Legend />
-          <Bar dataKey="male" name={t("education.male")} fill="hsl(220, 70%, 50%)" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="female" name={t("education.female")} fill="hsl(38, 92%, 50%)" radius={[4, 4, 0, 0]} />
-        </BarChart>
-      </ResponsiveContainer>
+      <AnimatedChartWrapper dataKey={chartKey} className="w-full h-[80%]">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={filteredData} barGap={2}>
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(40, 20%, 88%)" />
+            <XAxis
+              dataKey="province"
+              stroke="hsl(40, 10%, 40%)"
+              fontSize={11}
+              tickLine={false}
+              angle={-15}
+              textAnchor="end"
+              height={60}
+            />
+            <YAxis
+              stroke="hsl(40, 10%, 40%)"
+              fontSize={12}
+              tickLine={false}
+              domain={[0, 100]}
+              tickFormatter={(value) => `${value}%`}
+            />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "hsl(0, 0%, 100%)",
+                border: "1px solid hsl(40, 20%, 88%)",
+                borderRadius: "8px",
+                boxShadow: "0 4px 20px -4px rgba(0,0,0,0.1)",
+              }}
+              formatter={(value: number) => [`${value.toFixed(1)}%`, ""]}
+            />
+            <Legend />
+            <Bar dataKey="male" name={t("education.male")} fill="hsl(220, 70%, 50%)" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="female" name={t("education.female")} fill="hsl(38, 92%, 50%)" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </AnimatedChartWrapper>
     </div>
   );
 };
