@@ -12,7 +12,8 @@ import {
 import { literacyData } from "@/data/pakistanData";
 import { useTimeFilter } from "@/contexts/TimeFilterContext";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { ChartExportMenu } from "@/components/ChartExportMenu";
+import { BilingualExportMenu } from "@/components/BilingualExportMenu";
+import { AnimatedChartWrapper, useChartAnimationKey } from "./AnimatedChartWrapper";
 
 export const LiteracyChart = () => {
   const chartRef = useRef<HTMLDivElement>(null);
@@ -25,6 +26,7 @@ export const LiteracyChart = () => {
   );
 
   const isFiltered = yearRange[0] !== 1970 || yearRange[1] !== 2024;
+  const chartKey = useChartAnimationKey(yearRange);
 
   return (
     <div ref={chartRef} className="w-full h-[400px] p-6 bg-card rounded-xl border border-border shadow-card">
@@ -43,79 +45,82 @@ export const LiteracyChart = () => {
               {yearRange[0]} - {yearRange[1]}
             </span>
           )}
-          <ChartExportMenu
+          <BilingualExportMenu
             chartRef={chartRef}
             data={filteredData}
             filename="literacy-rates"
+            reportTitle={{ en: "Literacy Rate Evolution", ur: "خواندگی کی شرح کا ارتقاء" }}
           />
         </div>
       </div>
-      <ResponsiveContainer width="100%" height="80%">
-        <AreaChart data={filteredData}>
-          <defs>
-            <linearGradient id="colorMale" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="hsl(220, 70%, 50%)" stopOpacity={0.3} />
-              <stop offset="95%" stopColor="hsl(220, 70%, 50%)" stopOpacity={0} />
-            </linearGradient>
-            <linearGradient id="colorFemale" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="hsl(38, 92%, 50%)" stopOpacity={0.3} />
-              <stop offset="95%" stopColor="hsl(38, 92%, 50%)" stopOpacity={0} />
-            </linearGradient>
-            <linearGradient id="colorOverall" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="hsl(150, 98%, 13%)" stopOpacity={0.3} />
-              <stop offset="95%" stopColor="hsl(150, 98%, 13%)" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="hsl(40, 20%, 88%)" />
-          <XAxis
-            dataKey="year"
-            stroke="hsl(40, 10%, 40%)"
-            fontSize={12}
-            tickLine={false}
-          />
-          <YAxis
-            stroke="hsl(40, 10%, 40%)"
-            fontSize={12}
-            tickLine={false}
-            domain={[0, 100]}
-            tickFormatter={(value) => `${value}%`}
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: "hsl(0, 0%, 100%)",
-              border: "1px solid hsl(40, 20%, 88%)",
-              borderRadius: "8px",
-              boxShadow: "0 4px 20px -4px rgba(0,0,0,0.1)",
-            }}
-            formatter={(value: number) => [`${value.toFixed(1)}%`, ""]}
-          />
-          <Legend />
-          <Area
-            type="monotone"
-            dataKey="male"
-            name={t("education.male")}
-            stroke="hsl(220, 70%, 50%)"
-            strokeWidth={2}
-            fill="url(#colorMale)"
-          />
-          <Area
-            type="monotone"
-            dataKey="female"
-            name={t("education.female")}
-            stroke="hsl(38, 92%, 50%)"
-            strokeWidth={2}
-            fill="url(#colorFemale)"
-          />
-          <Area
-            type="monotone"
-            dataKey="overall"
-            name={t("education.overall")}
-            stroke="hsl(150, 98%, 13%)"
-            strokeWidth={3}
-            fill="url(#colorOverall)"
-          />
-        </AreaChart>
-      </ResponsiveContainer>
+      <AnimatedChartWrapper dataKey={chartKey} className="w-full h-[80%]">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={filteredData}>
+            <defs>
+              <linearGradient id="colorMale" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="hsl(220, 70%, 50%)" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="hsl(220, 70%, 50%)" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="colorFemale" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="hsl(38, 92%, 50%)" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="hsl(38, 92%, 50%)" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="colorOverall" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="hsl(150, 98%, 13%)" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="hsl(150, 98%, 13%)" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(40, 20%, 88%)" />
+            <XAxis
+              dataKey="year"
+              stroke="hsl(40, 10%, 40%)"
+              fontSize={12}
+              tickLine={false}
+            />
+            <YAxis
+              stroke="hsl(40, 10%, 40%)"
+              fontSize={12}
+              tickLine={false}
+              domain={[0, 100]}
+              tickFormatter={(value) => `${value}%`}
+            />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "hsl(0, 0%, 100%)",
+                border: "1px solid hsl(40, 20%, 88%)",
+                borderRadius: "8px",
+                boxShadow: "0 4px 20px -4px rgba(0,0,0,0.1)",
+              }}
+              formatter={(value: number) => [`${value.toFixed(1)}%`, ""]}
+            />
+            <Legend />
+            <Area
+              type="monotone"
+              dataKey="male"
+              name={t("education.male")}
+              stroke="hsl(220, 70%, 50%)"
+              strokeWidth={2}
+              fill="url(#colorMale)"
+            />
+            <Area
+              type="monotone"
+              dataKey="female"
+              name={t("education.female")}
+              stroke="hsl(38, 92%, 50%)"
+              strokeWidth={2}
+              fill="url(#colorFemale)"
+            />
+            <Area
+              type="monotone"
+              dataKey="overall"
+              name={t("education.overall")}
+              stroke="hsl(150, 98%, 13%)"
+              strokeWidth={3}
+              fill="url(#colorOverall)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </AnimatedChartWrapper>
     </div>
   );
 };
