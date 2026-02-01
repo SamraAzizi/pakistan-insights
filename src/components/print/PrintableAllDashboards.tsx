@@ -298,6 +298,7 @@ export const PrintableAllDashboards = forwardRef<HTMLDivElement, PrintableAllDas
             </tbody>
           </table>
         </section>
+
         {/* ========== ELECTIONS SECTION ========== */}
         <section id="section-elections" className="print-section mb-8 page-break-before">
           <div className="flex items-center gap-2 mb-4 pb-2 border-b-2 border-data-blue">
@@ -449,3 +450,139 @@ export const PrintableAllDashboards = forwardRef<HTMLDivElement, PrintableAllDas
               ))}
             </tbody>
           </table>
+
+          {/* Age Distribution Table */}
+          <h3 className="text-sm font-semibold mb-2">Age Distribution</h3>
+          <table className="print-table w-full border-collapse text-xs">
+            <thead>
+              <tr className="bg-muted/50">
+                <th className="text-left p-2 border border-border">Age Group</th>
+                <th className="text-center p-2 border border-border">Male %</th>
+                <th className="text-center p-2 border border-border">Female %</th>
+                <th className="text-center p-2 border border-border">Total %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ageDistribution.map((row, index) => (
+                <tr key={row.ageGroup} className={index % 2 === 1 ? "bg-muted/20" : ""}>
+                  <td className="p-2 border border-border font-medium">{row.ageGroup}</td>
+                  <td className="p-2 border border-border text-center">{row.male}</td>
+                  <td className="p-2 border border-border text-center">{row.female}</td>
+                  <td className="p-2 border border-border text-center font-semibold">
+                    {((row.male + row.female) / 2).toFixed(1)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+        {/* ========== ECONOMY SECTION ========== */}
+        <section id="section-economy" className="print-section mb-8 page-break-before">
+          <div className="flex items-center gap-2 mb-4 pb-2 border-b-2 border-data-coral">
+            <Banknote className="w-6 h-6 text-data-coral" />
+            <h2 className={cn(
+              "text-xl font-display font-bold text-data-coral",
+              isUrdu && "font-urdu"
+            )}>
+              {isUrdu ? "معیشت" : "Economy"}
+            </h2>
+          </div>
+
+          {/* Economy Stats */}
+          <div className="grid grid-cols-4 gap-3 mb-4">
+            <PrintableStat
+              value={`$${keyStatistics.gdpBillion}B`}
+              label="Total GDP"
+              icon={<Banknote className="w-4 h-4" />}
+              color="text-data-coral"
+            />
+            <PrintableStat
+              value={`${latestEconomic.inflation}%`}
+              label="Inflation Rate"
+              icon={<TrendingUp className="w-4 h-4" />}
+              color="text-data-coral"
+            />
+            <PrintableStat
+              value={`${latestEconomic.gdpGrowth}%`}
+              label="GDP Growth"
+              icon={<Briefcase className="w-4 h-4" />}
+              color="text-data-coral"
+            />
+            <PrintableStat
+              value={`${latestEconomic.unemployment}%`}
+              label="Unemployment"
+              icon={<Users className="w-4 h-4" />}
+              color="text-data-coral"
+            />
+          </div>
+
+          {/* GDP by Province Table */}
+          <h3 className="text-sm font-semibold mb-2">GDP Share by Province</h3>
+          <table className="print-table w-full border-collapse text-xs mb-4">
+            <thead>
+              <tr className="bg-muted/50">
+                <th className="text-left p-2 border border-border">Province</th>
+                <th className="text-center p-2 border border-border">GDP Share %</th>
+                <th className="text-center p-2 border border-border">Contribution</th>
+              </tr>
+            </thead>
+            <tbody>
+              {gdpByProvince.map((row, index) => (
+                <tr key={row.province} className={index % 2 === 1 ? "bg-muted/20" : ""}>
+                  <td className="p-2 border border-border font-medium">{row.province}</td>
+                  <td className="p-2 border border-border text-center font-semibold">{row.gdp}%</td>
+                  <td className="p-2 border border-border text-center">
+                    ${((row.gdp / 100) * keyStatistics.gdpBillion).toFixed(1)}B
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* Economic Indicators Table */}
+          <h3 className="text-sm font-semibold mb-2">Economic Indicators (2015-2023)</h3>
+          <table className="print-table w-full border-collapse text-xs">
+            <thead>
+              <tr className="bg-muted/50">
+                <th className="text-center p-2 border border-border">Year</th>
+                <th className="text-center p-2 border border-border">GDP Growth %</th>
+                <th className="text-center p-2 border border-border">Inflation %</th>
+                <th className="text-center p-2 border border-border">Unemployment %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {economicIndicators.map((row, index) => (
+                <tr key={row.year} className={index % 2 === 1 ? "bg-muted/20" : ""}>
+                  <td className="p-2 border border-border text-center font-medium">{row.year}</td>
+                  <td className={cn(
+                    "p-2 border border-border text-center",
+                    row.gdpGrowth < 0 ? "text-destructive" : "text-primary"
+                  )}>
+                    {row.gdpGrowth}%
+                  </td>
+                  <td className={cn(
+                    "p-2 border border-border text-center font-semibold",
+                    row.inflation > 20 ? "text-destructive" : row.inflation > 10 ? "text-data-amber" : "text-primary"
+                  )}>
+                    {row.inflation}%
+                  </td>
+                  <td className="p-2 border border-border text-center">{row.unemployment}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+        {/* ========== FOOTER ========== */}
+        <footer className="print-footer mt-8 pt-4 border-t border-border text-center text-xs text-muted-foreground">
+          <p className="font-semibold">Pakistan Data Atlas • Comprehensive Report</p>
+          <p className="mt-1">Data Sources: Pakistan Bureau of Statistics, Election Commission of Pakistan, World Bank, PBS Census</p>
+          <p className="mt-1">Generated on {currentDate} • All data subject to official revision</p>
+        </footer>
+      </div>
+    );
+  }
+);
+
+PrintableAllDashboards.displayName = "PrintableAllDashboards";
