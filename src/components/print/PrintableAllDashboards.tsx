@@ -298,3 +298,154 @@ export const PrintableAllDashboards = forwardRef<HTMLDivElement, PrintableAllDas
             </tbody>
           </table>
         </section>
+        {/* ========== ELECTIONS SECTION ========== */}
+        <section id="section-elections" className="print-section mb-8 page-break-before">
+          <div className="flex items-center gap-2 mb-4 pb-2 border-b-2 border-data-blue">
+            <Vote className="w-6 h-6 text-data-blue" />
+            <h2 className={cn(
+              "text-xl font-display font-bold text-data-blue",
+              isUrdu && "font-urdu"
+            )}>
+              {isUrdu ? "انتخابات" : "Elections"}
+            </h2>
+          </div>
+
+          {/* Election Stats */}
+          <div className="grid grid-cols-4 gap-3 mb-4">
+            <PrintableStat
+              value={electionData.length}
+              label="Total Elections"
+              icon={<Vote className="w-4 h-4" />}
+              color="text-data-blue"
+            />
+            <PrintableStat
+              value={latestElection.year}
+              label="Latest Election"
+              icon={<TrendingUp className="w-4 h-4" />}
+              color="text-data-blue"
+            />
+            <PrintableStat
+              value="272"
+              label="NA Seats"
+              icon={<Building2 className="w-4 h-4" />}
+              color="text-data-blue"
+            />
+            <PrintableStat
+              value={`${latestTurnout.turnout}%`}
+              label="2024 Turnout"
+              icon={<Users className="w-4 h-4" />}
+              color="text-data-blue"
+            />
+          </div>
+
+          {/* Election History Table */}
+          <h3 className="text-sm font-semibold mb-2">National Assembly Elections History</h3>
+          <table className="print-table w-full border-collapse text-xs mb-4">
+            <thead>
+              <tr className="bg-muted/50">
+                <th className="text-center p-2 border border-border">Year</th>
+                <th className="text-center p-2 border border-border">Winning Party</th>
+                <th className="text-center p-2 border border-border">Seats Won</th>
+                <th className="text-center p-2 border border-border">Vote Share %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {electionData.map((row, index) => (
+                <tr key={row.year} className={index % 2 === 1 ? "bg-muted/20" : ""}>
+                  <td className="p-2 border border-border text-center font-medium">{row.year}</td>
+                  <td className="p-2 border border-border text-center font-semibold">{row.party}</td>
+                  <td className="p-2 border border-border text-center">{row.seats}</td>
+                  <td className="p-2 border border-border text-center">{row.votes}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* Party Performance Table */}
+          <h3 className="text-sm font-semibold mb-2">Party Seats Won (Last 5 Elections)</h3>
+          <table className="print-table w-full border-collapse text-xs">
+            <thead>
+              <tr className="bg-muted/50">
+                <th className="text-center p-2 border border-border">Year</th>
+                <th className="text-center p-2 border border-border">PPP</th>
+                <th className="text-center p-2 border border-border">PML-N</th>
+                <th className="text-center p-2 border border-border">PTI</th>
+                <th className="text-center p-2 border border-border">Others</th>
+              </tr>
+            </thead>
+            <tbody>
+              {partyPerformanceHistory.slice(-5).map((row, index) => (
+                <tr key={row.year} className={index % 2 === 1 ? "bg-muted/20" : ""}>
+                  <td className="p-2 border border-border text-center font-medium">{row.year}</td>
+                  <td className="p-2 border border-border text-center">{row.PPP}</td>
+                  <td className="p-2 border border-border text-center">{row["PML-N"]}</td>
+                  <td className="p-2 border border-border text-center">{row.PTI}</td>
+                  <td className="p-2 border border-border text-center">{row.Others}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+        {/* ========== POPULATION SECTION ========== */}
+        <section id="section-population" className="print-section mb-8 page-break-before">
+          <div className="flex items-center gap-2 mb-4 pb-2 border-b-2 border-data-amber">
+            <Users className="w-6 h-6 text-data-amber" />
+            <h2 className={cn(
+              "text-xl font-display font-bold text-data-amber",
+              isUrdu && "font-urdu"
+            )}>
+              {isUrdu ? "آبادی" : "Population"}
+            </h2>
+          </div>
+
+          {/* Population Stats */}
+          <div className="grid grid-cols-4 gap-3 mb-4">
+            <PrintableStat
+              value={`${latestPopulation.population}M`}
+              label="Total Population"
+              icon={<Users className="w-4 h-4" />}
+              color="text-data-amber"
+            />
+            <PrintableStat
+              value={`${latestPopulation.urbanPercent}%`}
+              label="Urban Population"
+              icon={<Building2 className="w-4 h-4" />}
+              color="text-data-amber"
+            />
+            <PrintableStat
+              value={`${(100 - latestPopulation.urbanPercent).toFixed(1)}%`}
+              label="Rural Population"
+              icon={<MapPin className="w-4 h-4" />}
+              color="text-data-amber"
+            />
+            <PrintableStat
+              value="2.1%"
+              label="Growth Rate"
+              icon={<TrendingUp className="w-4 h-4" />}
+              color="text-data-amber"
+            />
+          </div>
+
+          {/* Population Trends Table */}
+          <h3 className="text-sm font-semibold mb-2">Population Trends (Census Data)</h3>
+          <table className="print-table w-full border-collapse text-xs mb-4">
+            <thead>
+              <tr className="bg-muted/50">
+                <th className="text-center p-2 border border-border">Year</th>
+                <th className="text-center p-2 border border-border">Population (Millions)</th>
+                <th className="text-center p-2 border border-border">Urban %</th>
+                <th className="text-center p-2 border border-border">Rural %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {populationData.map((row, index) => (
+                <tr key={row.year} className={index % 2 === 1 ? "bg-muted/20" : ""}>
+                  <td className="p-2 border border-border text-center font-medium">{row.year}</td>
+                  <td className="p-2 border border-border text-center font-semibold">{row.population}</td>
+                  <td className="p-2 border border-border text-center">{row.urbanPercent}%</td>
+                  <td className="p-2 border border-border text-center">{(100 - row.urbanPercent).toFixed(1)}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
