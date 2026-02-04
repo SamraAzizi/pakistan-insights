@@ -62,6 +62,36 @@ export const electionData = [
   { year: 2024, party: "IND", seats: 101, votes: 28.5 },
 ];
 
+// Historical party performance - seats won per election
+export const partyPerformanceHistory = [
+  { year: 1970, PPP: 81, "PML-N": 0, PTI: 0, Others: 57 },
+  { year: 1977, PPP: 155, "PML-N": 0, PTI: 0, Others: 45 },
+  { year: 1988, PPP: 92, "PML-N": 54, PTI: 0, Others: 51 },
+  { year: 1990, PPP: 45, "PML-N": 72, PTI: 0, Others: 80 },
+  { year: 1993, PPP: 86, "PML-N": 72, PTI: 0, Others: 44 },
+  { year: 1997, PPP: 18, "PML-N": 137, PTI: 0, Others: 49 },
+  { year: 2002, PPP: 63, "PML-N": 14, PTI: 1, Others: 124 },
+  { year: 2008, PPP: 87, "PML-N": 66, PTI: 0, Others: 89 },
+  { year: 2013, PPP: 33, "PML-N": 126, PTI: 28, Others: 77 },
+  { year: 2018, PPP: 43, "PML-N": 64, PTI: 149, Others: 16 },
+  { year: 2024, PPP: 54, "PML-N": 75, PTI: 93, Others: 44 },
+];
+
+// Historical party vote share percentage per election
+export const partyVoteShareHistory = [
+  { year: 1970, PPP: 38.9, "PML-N": 0, PTI: 0, Others: 61.1 },
+  { year: 1977, PPP: 58.1, "PML-N": 0, PTI: 0, Others: 41.9 },
+  { year: 1988, PPP: 38.5, "PML-N": 30.2, PTI: 0, Others: 31.3 },
+  { year: 1990, PPP: 36.8, "PML-N": 37.3, PTI: 0, Others: 25.9 },
+  { year: 1993, PPP: 37.8, "PML-N": 39.7, PTI: 0, Others: 22.5 },
+  { year: 1997, PPP: 21.4, "PML-N": 45.9, PTI: 0, Others: 32.7 },
+  { year: 2002, PPP: 25.8, "PML-N": 9.4, PTI: 0.8, Others: 64.0 },
+  { year: 2008, PPP: 30.6, "PML-N": 19.6, PTI: 0.1, Others: 49.7 },
+  { year: 2013, PPP: 15.2, "PML-N": 32.8, PTI: 16.9, Others: 35.1 },
+  { year: 2018, PPP: 13.0, "PML-N": 24.4, PTI: 31.8, Others: 30.8 },
+  { year: 2024, PPP: 12.5, "PML-N": 22.8, PTI: 28.5, Others: 36.2 },
+];
+
 export const voterTurnout = [
   { year: 1970, turnout: 63.1 },
   { year: 1977, turnout: 54.8 },
@@ -74,6 +104,44 @@ export const voterTurnout = [
   { year: 2013, turnout: 55.0 },
   { year: 2018, turnout: 51.8 },
   { year: 2024, turnout: 47.8 },
+];
+
+// Provincial seat distribution per election (National Assembly)
+export const provincialSeats = [
+  { year: 1970, Punjab: 82, Sindh: 27, KPK: 25, Balochistan: 4 },
+  { year: 1977, Punjab: 116, Sindh: 43, KPK: 26, Balochistan: 5 },
+  { year: 1988, Punjab: 115, Sindh: 46, KPK: 26, Balochistan: 11 },
+  { year: 1990, Punjab: 115, Sindh: 46, KPK: 26, Balochistan: 11 },
+  { year: 1993, Punjab: 115, Sindh: 46, KPK: 26, Balochistan: 11 },
+  { year: 1997, Punjab: 148, Sindh: 61, KPK: 35, Balochistan: 14 },
+  { year: 2002, Punjab: 148, Sindh: 61, KPK: 35, Balochistan: 14 },
+  { year: 2008, Punjab: 148, Sindh: 61, KPK: 35, Balochistan: 14 },
+  { year: 2013, Punjab: 148, Sindh: 61, KPK: 39, Balochistan: 16 },
+  { year: 2018, Punjab: 141, Sindh: 61, KPK: 39, Balochistan: 16 },
+  { year: 2024, Punjab: 141, Sindh: 61, KPK: 45, Balochistan: 16 },
+];
+
+// Provincial voter turnout per election
+export const provincialTurnout = [
+  { year: 2013, Punjab: 55.5, Sindh: 52.3, KPK: 58.2, Balochistan: 42.1 },
+  { year: 2018, Punjab: 52.1, Sindh: 48.7, KPK: 56.4, Balochistan: 38.9 },
+  { year: 2024, Punjab: 48.2, Sindh: 45.1, KPK: 52.8, Balochistan: 35.6 },
+];
+
+// Party-wise seats won per province per election
+export const partyProvincialSeats = [
+  { year: 2013, province: "Punjab", "PML-N": 116, "PTI": 7, "PPP": 3, "Others": 22 },
+  { year: 2013, province: "Sindh", "PML-N": 2, "PTI": 1, "PPP": 40, "Others": 18 },
+  { year: 2013, province: "KPK", "PML-N": 5, "PTI": 16, "PPP": 2, "Others": 16 },
+  { year: 2013, province: "Balochistan", "PML-N": 3, "PTI": 1, "PPP": 0, "Others": 12 },
+  { year: 2018, province: "Punjab", "PML-N": 68, "PTI": 66, "PPP": 4, "Others": 3 },
+  { year: 2018, province: "Sindh", "PML-N": 1, "PTI": 14, "PPP": 43, "Others": 3 },
+  { year: 2018, province: "KPK", "PML-N": 1, "PTI": 32, "PPP": 1, "Others": 5 },
+  { year: 2018, province: "Balochistan", "PML-N": 1, "PTI": 4, "PPP": 0, "Others": 11 },
+  { year: 2024, province: "Punjab", "PML-N": 84, "PTI": 39, "PPP": 5, "Others": 13 },
+  { year: 2024, province: "Sindh", "PML-N": 3, "PTI": 9, "PPP": 45, "Others": 4 },
+  { year: 2024, province: "KPK", "PML-N": 2, "PTI": 35, "PPP": 1, "Others": 7 },
+  { year: 2024, province: "Balochistan", "PML-N": 1, "PTI": 2, "PPP": 2, "Others": 11 },
 ];
 
 export const populationData = [
