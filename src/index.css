@@ -1,0 +1,359 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* Pakistan-inspired palette */
+    --background: 40 20% 98%;
+    --foreground: 160 30% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 160 30% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 30% 10%;
+
+    /* Pakistan Green - Primary */
+    --primary: 150 98% 13%;
+    --primary-foreground: 40 20% 98%;
+
+    /* Deep Indigo - Secondary */
+    --secondary: 230 40% 20%;
+    --secondary-foreground: 40 20% 98%;
+
+    /* Warm Sand */
+    --muted: 40 30% 94%;
+    --muted-foreground: 40 10% 40%;
+
+    /* Amber Gold - Accent */
+    --accent: 38 92% 50%;
+    --accent-foreground: 160 30% 10%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 40 20% 98%;
+
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 150 98% 13%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --pakistan-green: 150 98% 13%;
+    --pakistan-green-light: 150 60% 30%;
+    --pakistan-white: 0 0% 100%;
+    --data-blue: 220 70% 50%;
+    --data-indigo: 230 40% 20%;
+    --data-amber: 38 92% 50%;
+    --data-coral: 10 80% 60%;
+    --earth-warm: 25 40% 45%;
+    --earth-sand: 40 30% 94%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(150 98% 13%) 0%, hsl(230 40% 20%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(38 92% 50%) 0%, hsl(25 80% 45%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(40 30% 98%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(150 30% 10% / 0.08);
+    --shadow-card: 0 8px 30px -8px hsl(150 30% 10% / 0.12);
+    --shadow-elevated: 0 20px 50px -12px hsl(150 30% 10% / 0.2);
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 160 30% 10%;
+    --sidebar-primary: 150 98% 13%;
+    --sidebar-primary-foreground: 40 20% 98%;
+    --sidebar-accent: 40 30% 94%;
+    --sidebar-accent-foreground: 160 30% 10%;
+    --sidebar-border: 40 20% 88%;
+    --sidebar-ring: 150 98% 13%;
+  }
+
+  .dark {
+    --background: 230 30% 8%;
+    --foreground: 40 20% 95%;
+
+    --card: 230 25% 12%;
+    --card-foreground: 40 20% 95%;
+
+    --popover: 230 25% 12%;
+    --popover-foreground: 40 20% 95%;
+
+    --primary: 150 70% 45%;
+    --primary-foreground: 230 30% 8%;
+
+    --secondary: 230 30% 25%;
+    --secondary-foreground: 40 20% 95%;
+
+    --muted: 230 25% 18%;
+    --muted-foreground: 40 15% 60%;
+
+    --accent: 38 92% 50%;
+    --accent-foreground: 230 30% 8%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 40 20% 95%;
+
+    --border: 230 25% 20%;
+    --input: 230 25% 20%;
+    --ring: 150 70% 45%;
+
+    --sidebar-background: 230 25% 10%;
+    --sidebar-foreground: 40 20% 95%;
+    --sidebar-primary: 150 70% 45%;
+    --sidebar-primary-foreground: 230 30% 8%;
+    --sidebar-accent: 230 25% 18%;
+    --sidebar-accent-foreground: 40 20% 95%;
+    --sidebar-border: 230 25% 20%;
+    --sidebar-ring: 150 70% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  .text-gradient-hero {
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .bg-gradient-gold {
+    background: var(--gradient-gold);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+
+  /* Islamic geometric pattern overlay */
+  .pattern-geometric {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2301411C' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* Animated counter */
+  @keyframes countUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-count-up {
+    animation: countUp 0.6s ease-out forwards;
+  }
+
+  /* Chart reveal animation */
+  @keyframes chartReveal {
+    from { opacity: 0; transform: scaleY(0); }
+    to { opacity: 1; transform: scaleY(1); }
+  }
+
+  .animate-chart-reveal {
+    animation: chartReveal 0.8s ease-out forwards;
+    transform-origin: bottom;
+  }
+
+  /* Fade in up */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  /* Pulse glow */
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 20px hsl(150 98% 13% / 0.3); }
+    50% { box-shadow: 0 0 40px hsl(150 98% 13% / 0.5); }
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  /* Gradient text animation */
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+  }
+  /* Language switch animations */
+  @keyframes fadeSlideIn {
+    from { 
+      opacity: 0; 
+      transform: translateX(10px);
+    }
+    to { 
+      opacity: 1; 
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeSlideInRtl {
+    from { 
+      opacity: 0; 
+      transform: translateX(-10px);
+    }
+    to { 
+      opacity: 1; 
+      transform: translateX(0);
+    }
+  }
+
+  .animate-lang-switch {
+    animation: fadeSlideIn 0.3s ease-out forwards;
+  }
+
+  .animate-lang-switch-rtl {
+    animation: fadeSlideInRtl 0.3s ease-out forwards;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .font-body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .font-urdu {
+    font-family: 'Noto Nastaliq Urdu', serif;
+    line-height: 1.8;
+  }
+
+  /* Smooth language transition utilities */
+  .lang-transition {
+    transition: all 0.3s ease-out;
+  }
+
+  .lang-transition-text {
+    transition: opacity 0.2s ease-out, transform 0.3s ease-out;
+  }
+
+  .lang-transition-layout {
+    transition: flex-direction 0.3s ease-out, text-align 0.3s ease-out, transform 0.3s ease-out;
+  }
+
+  /* Direction transition */
+  .direction-rtl {
+    direction: rtl;
+  }
+
+  .direction-ltr {
+    direction: ltr;
+  }
+}
+
+/* Print-specific styles */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .printable-dashboard {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .print-section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .page-break-before {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  /* Hide interactive elements in print */
+  button,
+  .dialog-trigger,
+  nav,
+  footer:not(.print-footer) {
+    display: none !important;
+  }
+
+  /* Ensure proper table printing */
+  table {
+    page-break-inside: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tfoot {
+    display: table-footer-group;
+  }
+
+  /* Ensure backgrounds print */
+  .print-stat-card,
+  .print-domain-card {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
