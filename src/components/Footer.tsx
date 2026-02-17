@@ -28,13 +28,11 @@ export const Footer = () => {
               {t("footer.tagline")}
             </p>
             <div className={`flex gap-4 ${isUrdu ? 'justify-end' : ''}`}>
-              <a href="#" className="text-secondary-foreground/50 hover:text-accent transition-colors">
+              <a href="https://github.com/SamraAzizi" className="text-secondary-foreground/50 hover:text-accent transition-colors">
                 <Github className="w-5 h-5" />
               </a>
-              <a href="#" className="text-secondary-foreground/50 hover:text-accent transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-secondary-foreground/50 hover:text-accent transition-colors">
+              
+              <a href="https://www.linkedin.com/in/samraazizi/" className="text-secondary-foreground/50 hover:text-accent transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>

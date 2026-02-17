@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   GraduationCap, 
   Vote, 
@@ -11,17 +14,18 @@ import {
   BarChart3
 } from "lucide-react";
 
-const navItems = [
-  { path: "/", label: "Overview", icon: BarChart3 },
-  { path: "/education", label: "Education", icon: GraduationCap },
-  { path: "/elections", label: "Elections", icon: Vote },
-  { path: "/population", label: "Census", icon: Users },
-  { path: "/economy", label: "Economy", icon: TrendingUp },
-];
-
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { t, isUrdu } = useLanguage();
+
+  const navItems = [
+    { path: "/", label: t("nav.overview"), icon: BarChart3 },
+    { path: "/education", label: t("nav.education"), icon: GraduationCap },
+    { path: "/elections", label: t("nav.elections"), icon: Vote },
+    { path: "/population", label: t("nav.census"), icon: Users },
+    { path: "/economy", label: t("nav.economy"), icon: TrendingUp },
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
@@ -33,11 +37,11 @@ export const Navigation = () => {
               <BarChart3 className="w-5 h-5 text-primary-foreground" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="font-display text-lg font-bold text-foreground">
-                Pakistan Data Atlas
+              <h1 className={`font-display text-lg font-bold text-foreground ${isUrdu ? 'font-urdu' : ''}`}>
+                {isUrdu ? "پاکستان ڈیٹا اٹلس" : "Pakistan Data Atlas"}
               </h1>
               <p className="text-xs text-muted-foreground -mt-1">
-                پاکستان ڈیٹا اٹلس
+                {isUrdu ? "Pakistan Data Atlas" : "پاکستان ڈیٹا اٹلس"}
               </p>
             </div>
           </Link>
@@ -51,7 +55,7 @@ export const Navigation = () => {
                   <Button
                     variant={isActive ? "default" : "ghost"}
                     size="sm"
-                    className="gap-2"
+                    className={`gap-2 ${isUrdu ? 'font-urdu' : ''}`}
                   >
                     <item.icon className="w-4 h-4" />
                     {item.label}
@@ -59,6 +63,8 @@ export const Navigation = () => {
                 </Link>
               );
             })}
+            <LanguageToggle />
+            <ThemeToggle />
           </div>
 
           {/* Mobile Menu Button */}
@@ -82,7 +88,7 @@ export const Navigation = () => {
                   <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)}>
                     <Button
                       variant={isActive ? "default" : "ghost"}
-                      className="w-full justify-start gap-2"
+                      className={`w-full justify-start gap-2 ${isUrdu ? 'font-urdu' : ''}`}
                     >
                       <item.icon className="w-4 h-4" />
                       {item.label}
@@ -90,6 +96,18 @@ export const Navigation = () => {
                   </Link>
                 );
               })}
+              <div className="flex items-center justify-between pt-2 border-t border-border mt-2">
+                <span className={`text-sm text-muted-foreground ${isUrdu ? 'font-urdu' : ''}`}>
+                  {t("nav.language")}
+                </span>
+                <LanguageToggle />
+              </div>
+              <div className="flex items-center justify-between">
+                <span className={`text-sm text-muted-foreground ${isUrdu ? 'font-urdu' : ''}`}>
+                  {t("nav.theme")}
+                </span>
+                <ThemeToggle />
+              </div>
             </div>
           </div>
         )}

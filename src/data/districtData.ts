@@ -65,4 +65,3 @@ export const provinceColors: Record<string, string> = {
   'AJK': 'hsl(var(--ajk))',
   'ICT': 'hsl(var(--ict))',
 };
-n
