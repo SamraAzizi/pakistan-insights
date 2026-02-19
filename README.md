@@ -49,3 +49,20 @@ npm install
 # Start development server
 npm run dev
 ```
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── charts/          # Recharts visualizations
+│   ├── maps/            # Interactive Pakistan map
+│   ├── print/           # Print-optimized dashboard views
+│   ├── skeletons/       # Loading states
+│   └── ui/              # shadcn/ui components
+├── contexts/            # Language, filters, party selection
+├── data/                # Static datasets (provinces, districts, elections)
+├── hooks/               # Custom React hooks
+├── lib/                 # Export utilities (CSV, PDF, bilingual)
+└── pages/               # Route-level page components
+```
