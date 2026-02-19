@@ -38,7 +38,7 @@ Pakistan Data Atlas provides comprehensive dashboards covering four key domains:
 
 ```bash
 # Clone the repository
-git clone <YOUR_GIT_URL>
+git clone <https://github.com/SamraAzizi/pakistan-insights.git>
 
 # Navigate to the project
 cd pakistan-data-atlas
